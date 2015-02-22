@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+  	<div class="container">
+	  	<header>
+	        <% include ../partials/header %>
+	    </header>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+              <th data-field="number" data-halign="left" data-align="right">Number</th>
+              <th data-field="name" data-halign="center" data-align="left">Name</th>
+              <th data-field="priceofone" data-halign="center" data-align="left">Price/Item</th>
+              <th data-field="quantity" data-halign="center" data-align="left">Quantity</th>
+              <th data-field="price" data-halign="left" data-align="right">Total Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%var tot=0;%>
+          <% for(i=0;i<data.length;i++) { %>
+            <tr>
+              <td><%=i+1%></td>
+              <td><%=data[i].name%></td>
+              <td><%=data[i].price%></td>
+              <td><%=data[i].quantity%></td>
+              <td><%=data[i].price*data[i].quantity%></td>
+              <%tot=tot+ data[i].price*data[i].quantity%>
+              <td><button type="button" onclick="incCount('<%=data[i].Pid%>','<%=data[i].quantity%>')"> + </button></td>
+              <td><button type="button" onclick="decCount('<%=data[i].Pid%>','<%=data[i].quantity%>')"> - </button></td>
+              <td><button type="button" onclick="remItem('<%=data[i].Pid%>')"> Remove Item </button></td>
+            </tr>
+          <% } %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><h3>Final Total</h3></td>
+            <td><h3><%=tot%></h3></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <script>
+
+      function remItem(id){
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "/shoppingcart/delete");
+
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "id");
+        hiddenField.setAttribute("value", id);
+
+        form.appendChild(hiddenField);
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      function incCount(id,qty){
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "/shoppingcart/inc");
+        
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "id");
+        hiddenField.setAttribute("value", id);
+        form.appendChild(hiddenField);
+
+        var hiddenField1 = document.createElement("input");
+        hiddenField1.setAttribute("type", "hidden");
+        hiddenField1.setAttribute("name", "quantity");
+        hiddenField1.setAttribute("value", qty);
+        form.appendChild(hiddenField1);
+        
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      function decCount(id,qty){
+        if(qty==1)
+          remItem(id);
+        else{
+          var form = document.createElement("form");
+          form.setAttribute("method", "POST");
+          form.setAttribute("action", "/shoppingcart/dec");
+          
+          var hiddenField = document.createElement("input");
+          hiddenField.setAttribute("type", "hidden");
+          hiddenField.setAttribute("name", "id");
+          hiddenField.setAttribute("value", id);
+          form.appendChild(hiddenField);
+
+          var hiddenField1 = document.createElement("input");
+          hiddenField1.setAttribute("type", "hidden");
+          hiddenField1.setAttribute("name", "quantity");
+          hiddenField1.setAttribute("value", qty);
+          form.appendChild(hiddenField1);
+          
+
+          document.body.appendChild(form);
+          form.submit();
+        }
+      }
+      </script>
+	    
+	</div>
+  </body>
+
+  <footer>
+        <% include ../partials/footer %>
+  </footer>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+  	<div class="container">
+	  	<header>
+	        <% include ../partials/header %>
+	    </header>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+              <th data-field="number" data-halign="left" data-align="right">Number</th>
+              <th data-field="name" data-halign="center" data-align="left">Name</th>
+              <th data-field="category" data-halign="center" data-align="left">Category</th>
+              <th data-field="price" data-halign="left" data-align="right">Price</th>
+          </tr>
+        </thead>
+          
+        <tbody>
+          <% for(i=0;i<data.length;i++) { %>
+            <tr>
+              
+                <td><%=i+1%></td>
+                <td><%=data[i].name%></td>
+                <td><%=data[i].category%></td>
+                <td><%=data[i].price%></td>
+                <td><button type="button" onclick="myFunction('<%=data[i].Pid%>')">Add to Cart</button></td>
+              </form>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <script>
+      function myFunction(id){
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "/shoppingcart");
+
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "id");
+        hiddenField.setAttribute("value", id);
+
+        form.appendChild(hiddenField);
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+      </script>
+	    
+	</div>
+  </body>
+
+  <footer>
+        <% include ../partials/footer %>
+  </footer>
+</html>

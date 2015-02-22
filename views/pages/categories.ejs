@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body>
+  	<div class="container">
+	  	<header>
+	        <% include ../partials/header %>
+	    </header>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+              <th data-field="number" data-halign="left" data-align="right">Number</th>
+              <th data-field="name" data-halign="center" data-align="left">Name</th>
+              <th data-field="description" data-halign="left" data-align="right">Description</th>
+          </tr>
+        </thead>
+          
+        <tbody>
+          <% for(i=0;i<data.length;i++) { %>
+            <tr>
+              <td><%=i+1%></td>
+              <td><%=data[i].Name%></td>
+              <td><%=data[i].Description%></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+	</div>
+  </body>
+
+  <footer>
+        <% include ../partials/footer %>
+  </footer>
+</html>
